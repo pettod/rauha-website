@@ -34,8 +34,17 @@
                     transform: translateY(0);
                 }
             }
+            @media (max-width: 768px) {
+                .container-intro {
+                flex-direction: column;
+                width: 100%;
+                }
+                .right {
+                order: -1;
+                }
+            }
         </style>
-        <link rel="icon" type="image/x-icon" href="rauha/assets/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="rauha/assets/logo_low_res_1.ico" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -59,7 +68,37 @@
                 </div>
             </div>
         </header>
-        <section class="contact-section bg-black">
+        <!-- Projects-->
+        <section class="projects-section bg-black" id="projects" style="padding-top: 80px;">
+            <div class="container px-4 px-lg-5">
+                <!-- Featured Project Row-->
+                <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
+                    <div class="col-xl-8 col-lg-7" style="width: 500px; margin-left: auto; margin-right: auto;">
+                        <img class="img-fluid mb-3 mb-lg-0" src="rauha/assets/img/sensor_beam.jpg" alt="Sensor" style="border-radius: 40px;" />
+                    </div>
+                    <div class="col-xl-4 col-lg-5" style="width: 600px;">
+                        <div class="text-center text-lg-left">
+                            <h4 class="text-white">Sensor</h4>
+                            <p class="text-white-50 mb-0">Occupancy counting using sensors in the ceiling.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Project One Row-->
+                <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
+                    <div class="col-xl-4 col-lg-5" style="width: 600px;">
+                        <div class="text-center text-lg-left">
+                            <h4 class="text-white">Heat mapping</h4>
+                            <p class="text-white-50 mb-0">Real-time heat maps</p>
+                        </div>
+                    </div>
+                    <div class="col-xl-8 col-lg-7 right" style="width: 500px; margin-left: auto; margin-right: auto;">
+                        <img class="img-fluid mb-3 mb-lg-0" src="rauha/assets/img/occupancy.jpg" alt="Sensor" style="border-radius: 40px;" />
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact -->
+        <section class="contact-section bg-black" style="padding-top: 0px;">
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5">
             <h2 class="text-white-50 mx-auto mt-2 mb-5" style="font-size: 19px; max-width: 630px; text-align: left;">
