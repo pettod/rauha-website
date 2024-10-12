@@ -87,7 +87,7 @@ a:focus {
 }
 
 .content__title {
-	position: relative;
+	position: absolute;
 	top: 50%;
 	left: 0;
 	width: 100%;
