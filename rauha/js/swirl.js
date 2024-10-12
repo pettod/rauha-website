@@ -32,6 +32,8 @@ let lifeSpans;
 let speeds;
 let sizes;
 let hues;
+let window_w = window.innerWidth;
+let window_h = window.innerHeight;
 
 function setup() {
 	createCanvas();
@@ -137,6 +139,7 @@ function createCanvas() {
 	canvas.b.style = `
 		width: 100%;
 	`;
+  canvas.b.height = window_h;
 	container.appendChild(canvas.b);
 	ctx = {
 		a: canvas.a.getContext('2d'),
