@@ -27,6 +27,8 @@ body {
 	--color-link: #3c48fa;
 	--color-link-hover: #fff;
 	--color-title: #fff;
+	height: 100%;
+	width: 100%;
 }
 
 a {
