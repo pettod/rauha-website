@@ -27,7 +27,7 @@ body {
 	--color-link: #3c48fa;
 	--color-link-hover: #fff;
 	--color-title: #fff;
-	height: 100%;
+	height: 100vh;
 	width: 100%;
 }
 
@@ -88,7 +88,7 @@ a:focus {
 
 .content__title {
 	position: absolute;
-	top: 50%;
+	top: 50vh;
 	left: 0;
 	width: 100%;
 	text-align: center;
