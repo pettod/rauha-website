@@ -8,4 +8,4 @@ Image generator: [https://deepai.org/machine-learning-model/text2img](https://de
 
 Hosting: [https://www.ionos.co.uk](https://www.ionos.co.uk)
 
-[https://github.com/crnacura/AmbientCanvasBackgrounds/](https://github.com/crnacura/AmbientCanvasBackgrounds/)
+Effect: [https://github.com/crnacura/AmbientCanvasBackgrounds/](https://github.com/crnacura/AmbientCanvasBackgrounds/)
