@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shining Starry Background</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: black;
+        }
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="starCanvas"></canvas>
+
+<script>
+    const canvas = document.getElementById('starCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // Set canvas size to full screen
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const starCount = Math.floor(canvas.width * canvas.height / 5000);
+
+    // Star class to represent each shining star
+    class Star {
+        constructor() {
+            this.x = Math.random() * canvas.width; // Random x position
+            this.y = Math.random() * canvas.height; // Random y position
+            this.radius = Math.random() * 2; // Random star size
+            this.maxRadius = Math.random() * 5.5 + 1.5; // Max star size for twinkling
+            this.speed = Math.random() * 0.01 + 0.005; // Speed of twinkle effect
+            this.opacity = Math.random(); // Random initial brightness
+            this.increment = Math.random() * 0.01 + 0.005; // Twinkling speed
+        }
+
+        // Function to update the star's opacity for shining effect
+        update() {
+            this.opacity += this.increment;
+            if (this.opacity >= 1 || this.opacity <= 0) {
+                this.increment = -this.increment; // Reverse opacity to create a twinkle
+            }
+        }
+
+        // Function to draw the star on the canvas
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(255, 255, 255, ${this.opacity})`; // Brightness changes with opacity
+            ctx.fill();
+        }
+    }
+
+    // Create multiple stars and store them in an array
+    const stars = [];
+    for (let i = 0; i < starCount; i++) {
+        stars.push(new Star());
+    }
+
+    // Animation loop to keep stars shining
+    function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas before redrawing
+        for (let star of stars) {
+            star.update(); // Update star's brightness
+            star.draw();   // Draw star with updated brightness
+        }
+        requestAnimationFrame(animate); // Continuously call the animate function
+    }
+
+    animate(); // Start the animation loop
+
+    // Handle window resize to adjust canvas size
+    window.addEventListener('resize', () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    });
+</script>
+
+</body>
+</html>
