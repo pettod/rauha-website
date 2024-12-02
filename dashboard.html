@@ -396,6 +396,11 @@
                     text: null
                 },
                 max: 100,
+                labels: {
+                    formatter: function () {
+                        return this.value + '%'; // Append "%" to each label
+                    }
+                },
             },
             plotOptions: {
                 series: {
