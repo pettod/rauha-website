@@ -51,7 +51,7 @@
             font-size: 1rem;
             color: #666;
         }
-        #container {
+        #container2 {
             width: 90%;
             max-width: 1200px;
             display: grid;
@@ -124,6 +124,67 @@
         .submit-button:hover {
             background-color: #0096d6;
         }
+        #controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+        #play-pause-button {
+            position: relative;
+            padding: 15px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            font-size: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            margin-right: 20px;
+        }
+        #play-pause-button:hover {
+            background-color: #0056b3;
+        }
+        #play-pause-button:focus {
+            outline: none;
+        }
+        #play-pause-button .triangle {
+            width: 0;
+            height: 0;
+            border-left: 12px solid white;
+            border-top: 6px solid transparent;
+            border-bottom: 6px solid transparent;
+            margin: 0;
+            display: block;
+        }
+        #play-pause-button .pause-bar {
+            width: 6px;
+            height: 20px;
+            background-color: white;
+            margin: 0 3px;
+            display: none;
+        }
+        #play-pause-button.play .triangle {
+            display: block;
+        }
+        #play-pause-button.play .pause-bar {
+            display: none;
+        }
+        #play-pause-button.pause .triangle {
+            display: none;
+        }
+        #play-pause-button.pause .pause-bar {
+            display: block;
+        }
+        #play-range {
+            width: 75%;  /* Make the slider 100% width of the container */
+            margin: 0;  /* Remove any margin for proper alignment */
+        }
     </style>
 </head>
 <body>
@@ -148,7 +209,7 @@
         <p>$198,456</p>
     </div>
 </div>
-<div id="container">
+<div id="container2">
     <div class="chart-container">
         <h2>Today</h2>
         <div id="today-chart"></div>
@@ -163,7 +224,7 @@
     </div>
     <div class="chart-container">
         <div class="stat">
-        <h2>Building Insights</h2>
+        <h2>Building Insights Today</h2>
             <p style="text-align: left;"><b>Peak Occupancy</b>: Room 4 saw 90% occupancy during peak hours (11 AM - 2 PM).</p>
             <p style="text-align: left;"><b>Underutilized Areas</b>: Rooms 1 and 3 had less than 20% occupancy, indicating potential for space optimization.</p>
             <p style="text-align: left;"><b>Hotspots</b>: The central hallway experienced continuous foot traffic, with a noticeable spike at lunchtime.</p>
@@ -176,9 +237,234 @@
         <textarea id="user-input" class="input-field" placeholder="Ask..." oninput="autoResize(this)"></textarea>
         <button class="submit-button" onclick="submitInput()">Submit</button>
     </div>
+    <div class="chart-container">
+        <div id="controls">
+            <button id="play-pause-button" title="play" class="fa fa-play">
+                <div class="triangle"></div> <!-- Play Triangle -->
+                <div class="pause-bar"></div> <!-- First Pause Bar -->
+                <div class="pause-bar"></div> <!-- Second Pause Bar -->
+            </button>
+            <input type="range" id="play-range" min="0" max="23" step="1" value="0">
+        </div>
+        <div id="container"></div>
+    </div>
 </div>
 
 <script>
+    const months = [
+        'January 2023', 'February 2023', 'March 2023', 'April 2023', 'May 2023', 'June 2023',
+        'July 2023', 'August 2023', 'September 2023', 'October 2023', 'November 2023', 'December 2023',
+        'January 2024', 'February 2024', 'March 2024', 'April 2024', 'May 2024', 'June 2024',
+        'July 2024', 'August 2024', 'September 2024', 'October 2024', 'November 2024', 'December 2024'
+    ];
+
+    const btn = document.getElementById('play-pause-button'),
+            input = document.getElementById('play-range'),
+            nbr = 10; // 10 rooms
+
+    let dataset, chart;
+
+    // Generate occupancy data with small random changes between months
+    function generateOccupancyData() {
+        let data = [];
+        
+        for (let room = 1; room <= nbr; room++) {
+            let roomData = [];
+            let lastOccupancy = Math.floor(Math.random() * 101); // Random initial occupancy
+            roomData.push({
+                name: `Room ${room}`,
+                y: lastOccupancy
+            });
+
+            for (let month = 1; month < 24; month++) {
+                // Add small random change to the previous month's occupancy (range -5 to 5)
+                let change = Math.floor(Math.random() * 11) - 5; // Random change between -5 and 5
+                lastOccupancy = Math.min(Math.max(lastOccupancy + change, 0), 100); // Ensure within 0-100
+                roomData.push({
+                    name: `Room ${room}`,
+                    y: lastOccupancy
+                });
+            }
+
+            data.push(roomData);
+        }
+
+        // Format data to match the expected structure for the chart
+        return months.map((month, i) => ({
+            name: month,
+            data: data.map(roomData => ({
+                name: roomData[i].name,
+                y: roomData[i].y
+            }))
+        }));
+    }
+
+    // Set initial dataset
+    dataset = generateOccupancyData();
+
+    // Get the data for a given month
+    function getData(monthIndex) {
+        return dataset[monthIndex].data;
+    }
+
+    // Update the chart with the selected month's data
+    function update(increment) {
+        if (increment) {
+            input.value = parseInt(input.value, 10) + increment;
+        }
+        if (input.value >= 23) {
+            pause(btn);
+        }
+
+        chart.update({
+            subtitle: {
+                text: `<div style="font-size: 30px; text-align: right">${months[input.value].split(' ')[1]}</div><div style="font-size: 25px; text-align: center">${months[input.value].split(' ')[0]}</div>`,
+            }
+        }, false, false, false);
+
+        chart.series[0].update({
+            name: months[input.value],
+            data: getData(input.value)
+        });
+    }
+
+    // Pause the timeline when clicked
+    function pause(button) {
+        button.title = 'play';
+        button.classList.remove('pause');
+        button.classList.add('play');
+        clearTimeout(chart.sequenceTimer);
+        chart.sequenceTimer = undefined;
+    }
+
+    // Play the timeline animation
+    function play(button) {
+        button.title = 'pause';
+        button.classList.remove('play');
+        button.classList.add('pause');
+
+        // Reset the range input to the first month
+        input.value = 0;
+
+        // Reset the chart to show the first month’s data
+        update(0);  // Set the chart data to the first month
+
+        // Restart the timer for the animation
+        chart.sequenceTimer = setInterval(function () {
+            update(1);
+        }, 500);
+    }
+
+    // Create the Highcharts chart
+    (async () => {
+        chart = Highcharts.chart('container', {
+            chart: {
+                animation: {
+                    duration: 500
+                },
+                marginRight: 50
+            },
+            credits: {
+                enabled: false
+            },
+            title: {
+                text: 'Monthly Occupancy Rates for Rooms',
+                align: 'left'
+            },
+            subtitle: {
+                useHTML: true,
+                text: `<div style="font-size: 30px; text-align: right">${months[input.value].split(' ')[1]}</div><div style="font-size: 25px; text-align: center">${months[input.value].split(' ')[0]}</div>`,
+                floating: true,
+                align: 'right',
+                verticalAlign: 'bottom',
+                y: 30,
+                style: {
+                    fontSize: '25px'
+                }
+            },
+            legend: {
+                enabled: false
+            },
+            xAxis: {
+                type: 'category'
+            },
+            yAxis: {
+                opposite: true,
+                tickPixelInterval: 150,
+                title: {
+                    text: null
+                },
+                max: 100,
+            },
+            plotOptions: {
+                series: {
+                    animation: false,
+                    groupPadding: 0,
+                    pointPadding: 0.1,
+                    borderWidth: 0,
+                    colorByPoint: true,
+                    dataSorting: {
+                        enabled: true,
+                        matchByName: true
+                    },
+                    type: 'bar',
+                    dataLabels: {
+                        enabled: true
+                    }
+                }
+            },
+            series: [{
+                type: 'bar',
+                name: months[0],
+                data: getData(0)
+            }],
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 550
+                    },
+                    chartOptions: {
+                        xAxis: {
+                            visible: false
+                        },
+                        subtitle: {
+                            x: 0
+                        },
+                        plotOptions: {
+                            series: {
+                                dataLabels: [{
+                                    enabled: true,
+                                    y: 8
+                                }, {
+                                    enabled: true,
+                                    format: '{point.name}',
+                                    y: -8,
+                                    style: {
+                                        fontWeight: 'normal',
+                                        opacity: 0.7
+                                    }
+                                }]
+                            }
+                        }
+                    }
+                }]
+            }
+        });
+    })();
+
+    // Button event listener for play/pause
+    btn.addEventListener('click', function () {
+        if (chart.sequenceTimer) {
+            pause(this);
+        } else {
+            play(this);
+        }
+    });
+
+    // Update the chart when the range slider is adjusted
+    input.addEventListener('input', function () {
+        update();
+    });
     // Function to automatically resize the text area based on input
     function autoResize(element) {
         element.style.height = 'auto'; // Reset height to auto to allow it to shrink
