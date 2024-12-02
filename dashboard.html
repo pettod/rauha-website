@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Occupancy Rates</title>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .info-box {
+            width: 90%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            background: white;
+            padding-top: 20px;
+            padding-bottom: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .info-box .stat {
+            text-align: center;
+        }
+        .info-box .stat h3 {
+            margin: 5px 0;
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .info-box .stat p {
+            margin: 0;
+            font-size: 1rem;
+            color: #666;
+        }
+        #container {
+            width: 90%;
+            max-width: 1200px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding-bottom: 20px;
+        }
+        .chart-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .chart-container h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        #today-chart, #week-chart, #month-chart {
+            height: 300px;
+        }
+        .input-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        .input-container h2 {
+            text-align: center;
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        .input-field {
+            width: 100%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+            resize: none; /* Disable manual resizing */
+            max-height: 200px; /* Maximum height for the input field */
+            overflow-y: auto; /* Add scroll if the input grows beyond the max height */
+        }
+        .input-field:focus {
+            border-color: #00b1ff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+        }
+        .input-field::placeholder {
+            color: #888;
+            font-style: italic;
+        }
+        .submit-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #00b1ff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 15px;
+            transition: background-color 0.3s ease;
+        }
+        .submit-button:hover {
+            background-color: #0096d6;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Building Occupancy Rates</h1>
+<!-- Info Box -->
+<div class="info-box">
+    <div class="stat">
+        <h3>Headcount</h3>
+        <p>23 ppl</p>
+    </div>
+    <div class="stat">
+        <h3>Area</h3>
+        <p>3,308 ft²</p>
+    </div>
+    <div class="stat">
+        <h3>Cost per ft²</h3>
+        <p>$60 / ft²</p>
+    </div>
+    <div class="stat">
+        <h3>Total Cost</h3>
+        <p>$198,456</p>
+    </div>
+</div>
+<div id="container">
+    <div class="chart-container">
+        <h2>Today</h2>
+        <div id="today-chart"></div>
+    </div>
+    <div class="chart-container">
+        <h2>Last Week</h2>
+        <div id="week-chart"></div>
+    </div>
+    <div class="chart-container">
+        <h2>Last Month</h2>
+        <div id="month-chart"></div>
+    </div>
+    <div class="chart-container">
+        <div class="stat">
+        <h2>Building Insights</h2>
+            <p style="text-align: left;"><b>Peak Occupancy</b>: Room 4 saw 90% occupancy during peak hours (11 AM - 2 PM).</p>
+            <p style="text-align: left;"><b>Underutilized Areas</b>: Rooms 1 and 3 had less than 20% occupancy, indicating potential for space optimization.</p>
+            <p style="text-align: left;"><b>Hotspots</b>: The central hallway experienced continuous foot traffic, with a noticeable spike at lunchtime.</p>
+            <p style="text-align: left;"><b>Energy Efficiency</b>: HVAC usage in occupied areas aligned with occupancy patterns, suggesting efficient energy consumption.</p>
+            <p style="text-align: left;"><b>Actionable Insight</b>: Consider shifting activities to underutilized spaces (Rooms 1 and 3) to optimize space and reduce congestion in Room 4.</p>
+        </div>
+    </div>
+    <div class="chart-container">
+        <h2>Prompt the sensor data</h2>
+        <textarea id="user-input" class="input-field" placeholder="Ask..." oninput="autoResize(this)"></textarea>
+        <button class="submit-button" onclick="submitInput()">Submit</button>
+    </div>
+</div>
+
+<script>
+    // Function to automatically resize the text area based on input
+    function autoResize(element) {
+        element.style.height = 'auto'; // Reset height to auto to allow it to shrink
+        element.style.height = (element.scrollHeight) + 'px'; // Set height based on content
+    }
+    // Function to handle the input submission
+    function submitInput() {
+        const userInput = document.getElementById('user-input').value;
+        if (userInput.trim()) {
+            alert("Based on the sensor data ...");
+        }
+    }
+    // Example data
+    const todayData = [0, 0, 0, 3, 70, 90, 60, 95, 70, 30, 10, 0, 0];
+    const weekData = [70, 83, 85, 90, 50, 4, 1];
+    const monthData = Array.from({ length: 30 }, () => Math.floor(Math.random() * 100));
+
+    // Highcharts for "Today"
+    Highcharts.chart('today-chart', {
+        chart: {
+            type: 'line'
+        },
+        credits: { enabled: false },
+        legend:{ enabled:false },
+        plotOptions: { line: { marker: { enabled: false }}},
+        title: {
+            text: null
+        },
+        xAxis: {
+            categories: ['00:00', '02:00', '04:00', '06:00', '08:00', '10:00', '12:00', '14:00', '16:00', '18:00', '20:00', '22:00', '00:00']
+        },
+        yAxis: {
+            title: {
+                text: 'Occupancy Rate (%)'
+            },
+            max: 100
+        },
+        series: [{
+            name: 'Occupancy',
+            data: todayData
+        }]
+    });
+
+    // Highcharts for "This Week"
+    Highcharts.chart('week-chart', {
+        chart: {
+            type: 'column'
+        },
+        credits: { enabled: false },
+        legend:{ enabled:false },
+        title: {
+            text: null
+        },
+        xAxis: {
+            categories: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+        },
+        yAxis: {
+            title: {
+                text: 'Occupancy Rate (%)'
+            },
+            max: 100
+        },
+        series: [{
+            name: 'Occupancy',
+            data: weekData
+        }]
+    });
+
+    // Highcharts for "This Month"
+    Highcharts.chart('month-chart', {
+        chart: {
+            type: 'line'
+        },
+        credits: { enabled: false },
+        legend:{ enabled:false },
+        plotOptions: { line: { marker: { enabled: false }}},
+        title: {
+            text: null
+        },
+        xAxis: {
+            categories: Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`)
+        },
+        yAxis: {
+            title: {
+                text: 'Occupancy Rate (%)'
+            },
+            max: 100
+        },
+        series: [{
+            name: 'Occupancy',
+            data: monthData
+        }]
+    });
+</script>
+
+</body>
+</html>
