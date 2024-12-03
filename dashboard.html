@@ -199,12 +199,18 @@
             display: block;
         }
         #play-pause-button .pause-bar {
-            width: 8px;
-            height: 20px;
-            border-radius: 3px;
+            width: 6px;
+            height: 18px;
+            border-radius: 4px;
             background-color: white;
-            margin: 0 4px;
+            margin: 0 3px;
             display: none;
+        }
+        #play-pause-button.pause .triangle {
+            display: none;
+        }
+        #play-pause-button.pause .pause-bar {
+            display: block;
         }
         #play-range {
             width: 75%;
@@ -388,7 +394,7 @@
         // Reset the range input to the first month
         input.value = 0;
 
-        // Reset the chart to show the first month’s data
+        // Reset the chart to show the first month's data
         update(0);  // Set the chart data to the first month
 
         // Restart the timer for the animation
