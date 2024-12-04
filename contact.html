@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Rauha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 100px 20px;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(60deg,#714dff,#9c83ff 21.28%,#e151ff 57.97%,#fff759 90.64%);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 40px;
+            margin-top: 2rem;
+        }
+
+        .contact-item {
+            margin-bottom: 2rem;
+        }
+
+        .contact-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .contact-label {
+            display: block;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .contact-value {
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .gradient-orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+        }
+        
+        .gradient-orb:nth-child(1) {
+            background: radial-gradient(circle at center, #714dff, transparent 40%);
+            top: -100px;
+            left: -100px;
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg">
+        <div class="gradient-orb"></div>
+    </div>
+
+    <div class="container">
+        <h1>Get in Touch</h1>
+        <p style="color: rgb(255, 255, 255); margin-bottom: 2rem;">
+            Have questions about our occupancy sensors? We'd love to hear from you.
+        </p>
+
+        <div class="contact-info">
+            <div class="contact-item">
+                <span class="contact-label">Address</span>
+                <div class="contact-value">Senna Building, Gorsuch Place, London, E2 8JF</div>
+            </div>
+
+            <div class="contact-item">
+                <span class="contact-label">Email</span>
+                <div class="contact-value">info@rauha.co.uk</div>
+            </div>
+
+            <div class="contact-item">
+                <span class="contact-label">Phone</span>
+                <div class="contact-value">+44 7459 086319</div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
