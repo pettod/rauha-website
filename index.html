@@ -1,309 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="description" content="Next-generation occupancy estimation and facility usage measurements with real-time heat maps." />
-        <meta name="author" content="" />
-        <title>Rauha | Leading solution to carbon neutrality in buildings</title>
-        <style>
-            .container {
-                text-align: center;
-                animation: fadeIn 2s ease-in-out;
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rauha</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+            background: #000;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.306);
+            border-radius: 50px;
+            padding: 15px 30px;
+            z-index: 1000;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 1.0rem;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 90%;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 10;
+            background: linear-gradient(to right, #fff 20%, rgb(255, 255, 255));
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.1rem;
             }
-            .image-container {
-                margin-top: 20px;
-                transition: transform 0.5s ease-in-out;
+            .hero {
+                padding-top: 100px;
             }
-            .image-container img {
-                width: 350px;
-                max-width: 85%;
-                height: auto;
-                border-radius: 40px;
-                /*
-                box-shadow: 0 0 25px 10px rgb(205, 205, 205);
-                opacity: 0.8;
-                */
-                /*box-shadow: 0 30px 40px rgba(0,0,0,.1);*/ 
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: rgb(255, 255, 255);
+            margin-bottom: 3rem;
+            font-weight: 500;
+            max-width: 900px;
+            margin: 0 auto;
+            font-family: 'Inter', 'Inter fallback';
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 4rem;
+            perspective: 1000px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.306);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            width: 350px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform-style: preserve-3d;
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(240deg, 
+                transparent, 
+                rgb(255, 255, 255), 
+                transparent);
+        }
+
+        .stat-box::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at var(--mouse-x, center) var(--mouse-y, center), 
+                                      rgba(255,255,255,0.1) 0%,
+                                      transparent 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px) rotateX(5deg) rotateY(5deg);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-box:hover::after {
+            opacity: 1;
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #c1c1c1, #ffffff, #6d6d6d);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            min-height: 4rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+        .rotating-text {
+            position: absolute;
+            opacity: 0;
+            transition: all 1.2s ease;
+            background: linear-gradient(60deg,#714dff,#9c83ff 21.28%,#e151ff 57.97%,#fff759 90.64%);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: left;
+        }
+        .rotating-text.active {
+            opacity: 1;
+            transform: rotateX(0deg);
+        }
+        .rotating-text.inactive {
+            opacity: 0;
+            transform: rotateX(-90deg);
+        }
+        .title-prefix {
+            z-index: 2;
+        }
+        .rotating-text-container {
+            position: relative;
+            width: 1000px; /* Adjust based on your longest text */
+            height: 90px;
+            text-align: left;
+        }
+        @media (max-width: 768px) {
+            .rotating-text-container {
+                width: 95%;
+                height: 60px;
             }
-            @keyframes fadeIn {
-                0% {
-                    opacity: 0;
-                    transform: translateY(30px);
+        }
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .gradient-orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+        }
+        
+        .gradient-orb:nth-child(1) {
+            background: radial-gradient(circle at center, #714dff, transparent 40%);
+            top: -100px;
+            left: -100px;
+        }
+    </style>
+    <link rel="icon" type="image/x-icon" href="rauha/assets/logo_low_res_1.ico" />
+</head>
+<body>
+    <!--
+    <nav class="navbar">
+        <a href="#" class="nav-link">Rauha</a>
+        <a href="#" class="nav-link">Sensor</a>
+        <a href="#" class="nav-link">About</a>
+        <a href="#" class="nav-link">Contact</a>
+    </nav>
+    -->
+
+    <div class="hero">
+        <div class="animated-bg">
+            <div class="gradient-orb"></div>
+        </div>
+        <div class="container">
+            <h1>
+                <div class="rotating-text-container">
+                    Efficient&emsp;
+                    <span class="rotating-text active">Energy Management</span>
+                    <span class="rotating-text">Space Planning</span>
+                </div>
+            </h1>
+            <h1>with Occupancy Sensors</h1>
+            <p class="subtitle">
+                Accurate occupancy sensors are finally cost effective, easy to install, and maintenance free.
+                With our 360° field-of-view sensor, installation is not anymore restricted by the location or angle.
+            </p>
+            
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-number" id="projects">0</div>
+                    <div class="stat-label">Payback time</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="clients">0</div>
+                    <div class="stat-label">Installation time</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="accuracy">0</div>
+                    <div class="stat-label">Energy savings</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mouse move effect for stat boxes
+        document.querySelectorAll('.stat-box').forEach(box => {
+            box.addEventListener('mousemove', (e) => {
+                const rect = box.getBoundingClientRect();
+                const x = ((e.clientX - rect.left) / rect.width) * 100;
+                const y = ((e.clientY - rect.top) / rect.height) * 100;
+                box.style.setProperty('--mouse-x', `${x}%`);
+                box.style.setProperty('--mouse-y', `${y}%`);
+            });
+        });
+
+        const texts = document.querySelectorAll('.rotating-text');
+        let currentIndex = 0;
+
+        function rotateText() {
+            // Remove active class from current text
+            texts[currentIndex].classList.remove('active');
+            texts[currentIndex].classList.add('inactive');
+
+            // Update index
+            currentIndex = (currentIndex + 1) % texts.length;
+
+            // Remove inactive class from new text and add active
+            texts[currentIndex].classList.remove('inactive');
+            texts[currentIndex].classList.add('active');
+        }
+
+        // Initial setup
+        texts.forEach((text, index) => {
+            if (index !== 0) text.classList.add('inactive');
+        });
+
+        // Rotate every 5 seconds instead of 3
+        setInterval(rotateText, 5000);
+
+        function animateNumber(element, target, duration, suffix = '') {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    clearInterval(timer);
+                    start = target;
                 }
-                100% {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
-            @media (max-width: 768px) {
-                .container-intro {
-                flex-direction: column;
-                width: 100%;
-                }
-                .right {
-                order: -1;
-                }
-            }
-        </style>
-        <link rel="icon" type="image/x-icon" href="rauha/assets/logo_low_res_1.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Varela+Round" rel="stylesheet" />
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Michroma">
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
-        <!-- Core theme CSS (includes Bootstrap)-->
-		<link rel="stylesheet" type="text/css" href="rauha/css/base.css" />
-		<link rel="stylesheet" type="text/css" href="rauha/css/demo2.css" />
-        <link rel="stylesheet" type="text/css" href="rauha/css/styles.css" />
-    </head>
-    <body id="page-top" style="height: 100vh;">
-        <!-- Masthead-->
-        <header id="masthead" class="masthead">
-            <div class="container px-4 px-lg-5 d-flex h-100 align-items-center justify-content-center">
-                <div class="d-flex justify-content-center">
-                    <div class="text-center">
-                        <h1 class="mx-auto my-0 text-uppercase">RAUHA</h1>
-                        <h2 class="text-white-50 mx-auto mt-2 mb-5">
-                            The leading solution to high energy costs and low occupancy rates
-                        </h2>
-                        <div class="animated-border-box-glow"></div>
-                        <div class="animated-border-box"></div>
-                        <div class="image-container">
-                            <img src="rauha/assets/img/green_light_bulb_3.jpg" style="opacity: 0%;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- Launching -->
-        <section id="launch-animation" class="demo-2">
-			<div class="content content--canvas">
-				<h2 id="launch-title" class="content__title">
-					Defining the future of smart buildings
-					<br>
-					<span style="color: #00ff00; font-size: 30px;">
-						Launching in Spring 2025
-					</span>
-				</h2>
-			</div>
-		</section>
-        <!-- Summary -->
-        <section class="contact-section bg-black" style="padding-top: 100px; padding-bottom: 1px;">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5" style="justify-content: center;">
-                    <h4 class="text-white glow-border-left" style="text-align: left; max-width: 90%;">
-                        We offer actionable recommendation on when to switch your HVAC on/off, saving up to 30% in energy costs.
-                        Second, we pinpoint the exact locations of poor occupancy to repurpose the spaces for revenue-generating activities.
-                    </h4>
-                </div>
-            </div>
-        </section>
-        <!-- Projects-->
-        <section class="projects-section bg-black" id="projects" style="padding-top: 100px; padding-bottom: 1px;">
-            <div class="container px-4 px-lg-5">
-                <!-- Sensor beam -->
-                <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
-                    <div class="col-xl-8 col-lg-7" style="width: 500px; margin-left: auto; margin-right: auto;">
-                        <img class="img-fluid mb-3 mb-lg-0" src="rauha/assets/img/sensor_beam.jpg" alt="Sensor" style="border-radius: 40px;" />
-                    </div>
-                    <div class="col-xl-4 col-lg-5" style="width: 500px; margin-left: auto; margin-right: auto;">
-                        <div class="text-center text-lg-left">
-                            <h2 class="text-white">Sensor</h4>
-                            <p class="text-white-50 mb-0" style="text-align: left;">
-                                We are building the world's first proprietary occupancy sensor for precise and intelligent occupancy detection.
-                                It is designed to outcompete in accuracy, data, and price.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <!-- Heat map -->
-                <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
-                    <div class="col-xl-4 col-lg-5" style="width: 500px; margin-left: auto; margin-right: auto;">
-                        <div class="text-center text-lg-left">
-                            <h2 class="text-white">Heat mapping</h4>
-                            <p class="text-white-50 mb-0" style="text-align: left;">
-                                Understand how your spaces are used with real-time heat maps.
-                                Identify high-traffic areas, reallocate resources, and make informed decisions that enhance both functionality and comfort.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="col-xl-8 col-lg-7 right" style="width: 500px; margin-left: auto; margin-right: auto;">
-                        <img class="img-fluid mb-3 mb-lg-0" src="rauha/assets/img/occupancy.jpg" alt="Sensor" style="border-radius: 40px;" />
-                    </div>
-                </div>
-                <!-- Sustainable future -->
-                <div class="row gx-0 mb-4 mb-lg-5 align-items-center">
-                    <div class="col-xl-8 col-lg-7" style="width: 500px; margin-left: auto; margin-right: auto;">
-                        <img class="img-fluid mb-3 mb-lg-0" src="rauha/assets/img/green_plant.jpg" alt="Sustainable future" style="border-radius: 40px;" />
-                    </div>
-                    <div class="col-xl-4 col-lg-5" style="width: 500px; margin-left: auto; margin-right: auto;">
-                        <div class="text-center text-lg-left">
-                            <h2 class="text-white">Sustainable future</h4>
-                            <p class="text-white-50 mb-0" style="text-align: left;">
-                                Transitioning to green energy and cutting heating costs are key goals for Net Zero 2030.
-                                Moreover, eliminating underutilized spaces leads to greater savings of resources.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Why does our solution matter? -->
-        <section class="contact-section bg-black">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5">
-                    <h2 class="text-white">Why does our solution matter?</h2>
-                    <h2 class="text-white mx-auto mt-2" style="font-size: 22px; max-width: 630px; text-align: left;">
-                        Net Zero 2030 goal
-                    </h2>
-                    <p class="text-white-50 mx-auto mt-2" style="max-width: 630px; text-align: left;">
-                        The Energy Bill 2024 sets new regulations aimed at improving the UK's energy efficiency.
-                        Property owners must upgrade systems like insulation or heating, or face fines up to <b>£150,000</b> or <b>20%</b> of the rateable value of the property.
-                        <sup><a href="https://www.nrla.org.uk/news/the-upcoming-epc-changes-what-landlords-need-to-know">[1]</a></sup><sup><a href="https://www.brightllp.co.uk/news/changes-to-epc-regulations-for-commercial-properties">[2]</a></sup>
-                        <br>
-                        <br>
-                        In 2012, <b>87.2%</b> of the energy consumed in the UK came from fossil fuels.
-                        In 2022, that number was <b>78.4%</b>.
-                        <sup><a href="https://www.bbc.co.uk/news/business-63976805">[3]</a></sup>
-                        The transition to green energy is progressing too slowly, highlighting the need for energy savings.
-                        The savings are achieved in two primary ways: first, by optimizing HVAC and lighting to operate only when and where necessary; and second, by utilizing rental space more effectively.
-                    </p>
-                    <h2 class="text-white mx-auto mt-2" style="font-size: 22px; max-width: 630px; text-align: left;">
-                        Energy optimization
-                    </h2>
-                    <p class="text-white-50 mx-auto mt-2" style="max-width: 630px; text-align: left;">
-                        Buildings consume <b>40%</b> of global energy and account for <b>33%</b> of greenhouse gas emissions.
-                        <sup><a href="https://renewableinstitute.org/images/unep%20info%20sheet%20-%20ee%20buildings.pdf">[4]</a></sup>
-                        Modern solutions in smart buildings can reduce lighting costs by up to <b>30%</b> and HVAC costs by up to <b>25%</b>.
-                        <sup><a href="https://energysavingslab.com/workplace-energy-savings/smart-building-systems/the-impact-of-occupancy-sensors-on-energy-savings-in-smart-building-systems">[5]</a></sup>
-                    </p>
-                    <h2 class="text-white mx-auto mt-2" style="font-size: 22px; max-width: 630px; text-align: left;">
-                        Eliminate underutilized real estate
-                    </h2>
-                    <p class="text-white-50 mx-auto mt-2" style="max-width: 630px; text-align: left;">
-                        The average occupancy rate across European offices is <b>55%</b>.
-                        Prior to the pandemic, the occupancy was at <b>70%</b> which is considered an optimal level.
-                        <sup><a href="https://www.savills.co.uk/research_articles/229130/343549-0">[6]</a></sup>
-                        At the moment, nearly <b>70%</b> of London based companies choose to downsize in order to reduce the office footprint.
-                        <sup><a href="https://www.rics.org/news-insights/wbef/the-outlook-for-office-markets-towards-a-two-tiered-system">[7]</a></sup>
-                    </p>
-                    <h2 class="text-white mx-auto mt-2" style="font-size: 22px; max-width: 630px; text-align: left;">
-                        3 reasons to choose our solution
-                    </h2>
-                    <ul class="text-white-50 mx-auto mt-2" style="max-width: 630px; text-align: left;">
-                        <ol>
-                            <li>80% cheaper than camera-based solutions</li>
-                            <li>Plug-and-play installation, no wiring, no engineering</li>
-                            <li>Clear reports of the state of a building</li>
-                        </ol>
-                    </ul>
-                    <h2 class="text-white mx-auto mt-2" style="font-size: 22px; max-width: 630px; text-align: left;">
-                        References
-                    </h2>
-                    <p class="text-white-50 mx-auto mt-2" style="max-width: 630px; text-align: left; word-wrap: break-word;">
-                        [1]<span style="color: black;">_</span><a href="https://www.nrla.org.uk/news/the-upcoming-epc-changes-what-landlords-need-to-know">https://www.nrla.org.uk/news/the-upcoming-epc-changes-what-landlords-need-to-know</a><br>
-                        [2]<span style="color: black;">_</span><a href="https://www.brightllp.co.uk/news/changes-to-epc-regulations-for-commercial-properties">https://www.brightllp.co.uk/news/changes-to-epc-regulations-for-commercial-properties</a><br>
-                        [3]<span style="color: black;">_</span><a href="https://www.bbc.co.uk/news/business-63976805">https://www.bbc.co.uk/news/business-63976805</a><br>
-                        [4]<span style="color: black;">_</span><a href="https://renewableinstitute.org/images/unep%20info%20sheet%20-%20ee%20buildings.pdf">https://renewableinstitute.org/images/unep%20info%20sheet%20-%20ee%20buildings.pdf</a><br>
-                        [5]<span style="color: black;">_</span><a href="https://energysavingslab.com/workplace-energy-savings/smart-building-systems/the-impact-of-occupancy-sensors-on-energy-savings-in-smart-building-systems">https://energysavingslab.com/workplace-energy-savings/smart-building-systems/the-impact-of-occupancy-sensors-on-energy-savings-in-smart-building-systems</a><br>
-                        [6]<span style="color: black;">_</span><a href="https://www.savills.co.uk/research_articles/229130/343549-0">https://www.savills.co.uk/research_articles/229130/343549-0</a><br>
-                        [7]<span style="color: black;">_</span><a href="https://www.rics.org/news-insights/wbef/the-outlook-for-office-markets-towards-a-two-tiered-system">https://www.rics.org/news-insights/wbef/the-outlook-for-office-markets-towards-a-two-tiered-system</a>
-                    </p>
-                </div>
-            </div>
-        </section>
-        <!-- About us -->
-        <section class="contact-section bg-black">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5">
-                    <h2 class="text-white">About us</h2>
-                    <p class="text-white-50 mx-auto mt-2 mb-0" style="max-width: 630px; text-align: left;">
-                        We are a team of acoustic and AI experts applying the latest AI research into the built environments.
-                        Whether inefficient facility utilization, lack of in-depth knowledge on how your facilities are being used, or achieving Net Zero targets sound worrisome, our technology may be worth hearing out.
-                        <br>
-                        <br>
-                        Our background is in developing noiseless stealth aircrafts and audiovisual camera algorithms in smart phones and self driving vehicles.
-                        Now we are on a mission to bring our expertise into building designs which are far behind the technological advancements already applied to mobile, automotive, and aerospace industries.
-                        <br>
-                        <br>
-                        More information via email.
-                    </p>
-                </div>
-            </div>
-        </section>
-        <section class="contact-section bg-black" style="padding-top: 0px;">
-            <div class="container px-4 px-lg-5" style="max-width: 630px;">
-                <div class="row gx-4 gx-lg-5">
-                    <div class="col-xl-8 col-lg-7 right" style="width: 250px; margin-left: auto; margin-right: auto; padding-top: 20px;">
-                        <img class="img-fluid mb-3 mb-lg-0" src="rauha/assets/img/abhishek.png" alt="CEO" style="border-radius: 20px;" />
-                        <p class="text-white-50 mx-auto mt-2 mb-0">
-                            Abhishek Gautam<br>
-                            CEO<br>
-                            Aero-acoustics Ph.D.</p>
-                    </div>
-                    <div class="col-xl-8 col-lg-7 right" style="width: 250px; margin-left: auto; margin-right: auto; padding-top: 20px;">
-                        <img class="img-fluid mb-3 mb-lg-0" src="rauha/assets/img/peter.jpg" alt="CTO" style="border-radius: 20px;" />
-                        <p class="text-white-50 mx-auto mt-2 mb-0">
-                            Peter Todorov<br>
-                            CTO<br>
-                            Ex-Huawei AI engineer
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Contact-->
-        <section class="contact-section bg-black">
-            <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5">
-                    <div class="col-md-4 mb-3 mb-md-0">
-                        <div class="card py-4 h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-map-marked-alt text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Address</h4>
-                                <hr class="my-4 mx-auto" style="border-radius: 5px;"/>
-                                <div class="small text-black-50">Senna Building, Gorsuch Place, London, E2 8JF</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3 mb-md-0">
-                        <div class="card py-4 h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-envelope text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Email</h4>
-                                <hr class="my-4 mx-auto" style="border-radius: 5px;"/>
-                                <div class="small text-black-50">info@rauha.co.uk</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 mb-3 mb-md-0">
-                        <div class="card py-4 h-100">
-                            <div class="card-body text-center">
-                                <i class="fas fa-mobile-alt text-primary mb-2"></i>
-                                <h4 class="text-uppercase m-0">Phone</h4>
-                                <hr class="my-4 mx-auto" style="border-radius: 5px;"/>
-                                <div class="small text-black-50">+44 7459 086319</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Footer-->
-        <footer class="footer bg-black small text-center text-white-50"><div class="container px-4 px-lg-5">Copyright &copy; Rauha 2024. All rights reserved.</div></footer>
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-        <!-- Core theme JS-->
-        <script src="rauha/js/scripts.js"></script>
-		<script src="rauha/js/noise.min.js"></script>
-		<script src="rauha/js/util.js"></script>
-		<script src="rauha/js/swirl.js"></script>
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <!-- * *                               SB Forms JS                               * *-->
-        <!-- * * Activate your form at https://startbootstrap.com/solution/contact-forms * *-->
-        <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
-        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
-    </body>
+                element.textContent = Math.floor(start) + suffix;
+            }, 16);
+        }
+
+        // Start animations when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            animateNumber(document.getElementById('projects'), 6, 1000, ' months');
+            animateNumber(document.getElementById('clients'), 1, 1000, ' day');
+            animateNumber(document.getElementById('accuracy'), 30, 1000, ' %');
+        });
+    </script>
+</body>
 </html>
