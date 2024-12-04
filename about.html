@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Rauha</title>
+    <title>About - Rauha</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/x-icon" href="rauha/assets/logo_low_res_1.ico" />
     <link rel="stylesheet" href="styles.css">
@@ -30,7 +30,7 @@
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 20px; /* Removed top/bottom padding */
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -46,7 +46,7 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .contact-info {
+        .about-content {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -54,27 +54,28 @@
             padding: 40px;
             margin-top: 2rem;
             width: 100%;
-            text-align: center;
+            text-align: left;
         }
 
-        .contact-item {
+        .about-section {
             margin-bottom: 2rem;
         }
 
-        .contact-item:last-child {
+        .about-section:last-child {
             margin-bottom: 0;
         }
 
-        .contact-label {
-            display: block;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
+        .section-title {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
         }
 
-        .contact-value {
-            color: #fff;
+        .section-text {
+            color: rgba(255, 255, 255, 0.7);
             font-size: 1.1rem;
+            line-height: 1.8;
         }
 
         .animated-bg {
@@ -116,22 +117,26 @@
     </div>
 
     <div class="container">
-        <h1>Get in Touch</h1>
+        <h1>About us</h1>
 
-        <div class="contact-info">
-            <div class="contact-item">
-                <span class="contact-label">Address</span>
-                <div class="contact-value">Senna Building, Gorsuch Place, London, E2 8JF</div>
+        <div class="about-content">
+            <div class="about-section">
+                <h2>Abhishek Gautam – CEO</h2>
+                <p class="section-text">
+                    Abhishek is a PhD in aero-acoustics. He is a former F1 engineer with Red Bull and has developed noiseless stealth aircrafts.
+                    Also, he has led the commercials in Gravity Industries to bring the real life “Iron man” jetsuit to life.
+                    He holds 14 publications.
+                </p>
             </div>
 
-            <div class="contact-item">
-                <span class="contact-label">Email</span>
-                <div class="contact-value">info@rauha.co.uk</div>
+            <div class="about-section">
+                <h2>Peter Todorov – CTO</h2>
+                <p class="section-text">
+                    Peter has a MSc in AI. He is a former Huawei engineer and has 5 years of experience on camera algorithms in smart phones and self driving vehicles.
+                    The past 3 years he spent on developing AI algorithms on chips.
+                    He holds 1 patent and 1 publication.
+                </p>
             </div>
-
-            <div class="contact-item">
-                <span class="contact-label">Phone</span>
-                <div class="contact-value">+44 7459 086319</div>
             </div>
         </div>
     </div>
