@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NextGen AI Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            line-height: 1.6;
+            background: #000;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 0%, rgba(128, 128, 128, 0.534), transparent 25%);
+            pointer-events: none;
+        }
+
+        .container {
+            max-width: 1200px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #fff 20%, rgb(255, 255, 255));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 3rem;
+            font-weight: 400;
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.306);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            width: 350px;
+            height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .stat-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(240deg, 
+                transparent, 
+                rgb(255, 255, 255), 
+                transparent);
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: #fff;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            min-height: 4rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="container">
+            <h1>Rauha</h1>
+            <p class="subtitle">Cost effective solution to high energy costs and low occupancy rates </p>
+            
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-number" id="projects">0</div>
+                    <div class="stat-label">Payback time</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="clients">0</div>
+                    <div class="stat-label">Installation time</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="accuracy">0</div>
+                    <div class="stat-label">Field-of-view</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function animateNumber(element, target, duration, suffix = '') {
+            let start = 0;
+            const increment = target / (duration / 16);
+            const timer = setInterval(() => {
+                start += increment;
+                if (start >= target) {
+                    clearInterval(timer);
+                    start = target;
+                }
+                element.textContent = Math.floor(start) + suffix;
+            }, 16);
+        }
+
+        // Start animations when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            animateNumber(document.getElementById('projects'), 6, 1000, ' months');
+            animateNumber(document.getElementById('clients'), 1, 1000, ' day');
+            animateNumber(document.getElementById('accuracy'), 360, 1000, '°');
+        });
+    </script>
+</body>
+</html>
