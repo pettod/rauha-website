@@ -77,6 +77,12 @@
             -webkit-text-fill-color: transparent;
         }
 
+        @media (max-width: 768px) {
+            h1 {
+                padding-top: 100px;
+            }
+        }
+
         .subtitle {
             font-size: 1.5rem;
             color: rgba(255, 255, 255, 0.7);
@@ -130,7 +136,7 @@
         .stat-number {
             font-size: 3.5rem;
             font-weight: 700;
-            background: #fff;
+            background: linear-gradient(to right, #c1c1c1, #ffffff, #6d6d6d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
@@ -158,7 +164,7 @@
     <div class="hero">
         <div class="container">
             <h1>Rauha</h1>
-            <p class="subtitle">Cost effective solution to high energy costs and low occupancy rates </p>
+            <p class="subtitle">Cost effective occupancy sensors to solve high energy costs and low occupancy rates </p>
             
             <div class="stats-container">
                 <div class="stat-box">
@@ -171,7 +177,7 @@
                 </div>
                 <div class="stat-box">
                     <div class="stat-number" id="accuracy">0</div>
-                    <div class="stat-label">Field-of-view</div>
+                    <div class="stat-label">Energy savings</div>
                 </div>
             </div>
         </div>
@@ -195,7 +201,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             animateNumber(document.getElementById('projects'), 6, 1000, ' months');
             animateNumber(document.getElementById('clients'), 1, 1000, ' day');
-            animateNumber(document.getElementById('accuracy'), 360, 1000, '°');
+            animateNumber(document.getElementById('accuracy'), 30, 1000, '%');
         });
     </script>
 </body>
