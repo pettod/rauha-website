@@ -70,12 +70,13 @@
         }
 
         h1 {
-            font-size: 5rem;
-            font-weight: 100;
+            font-size: 4.5rem;
+            font-weight: 10;
             margin-bottom: 1.5rem;
             background: linear-gradient(to right, #fff 20%, rgb(255, 255, 255));
             background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.1;
         }
 
         @media (max-width: 768px) {
@@ -85,10 +86,13 @@
         }
 
         .subtitle {
-            font-size: 1.5rem;
-            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.2rem;
+            color: rgb(255, 255, 255);
             margin-bottom: 3rem;
-            font-weight: 400;
+            font-weight: 500;
+            max-width: 900px;
+            margin: 0 auto;
+            font-family: 'Inter', 'Inter fallback';
         }
 
         .stats-container {
@@ -164,8 +168,17 @@
 
     <div class="hero">
         <div class="container">
-            <h1>Rauha</h1>
-            <p class="subtitle">Cost effective occupancy sensors to solve high energy costs and low occupancy rates </p>
+            <h1>
+                Efficient 
+                <span style="background: linear-gradient(60deg,#714dff,#9c83ff 21.28%,#e151ff 57.97%,#fff759 90.64%); background-clip: text; -webkit-text-fill-color: transparent;">
+                    Space Planning
+                </span><br>
+                with Occupancy Sensors
+            </h1>
+            <p class="subtitle">
+                Accurate occupancy sensors are finally cost effective and easy to install.
+                With our 360° field-of-view sensor, installation is not anymore restricted by the location or angle.
+            </p>
             
             <div class="stats-container">
                 <div class="stat-box">
@@ -202,7 +215,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             animateNumber(document.getElementById('projects'), 6, 1000, ' months');
             animateNumber(document.getElementById('clients'), 1, 1000, ' day');
-            animateNumber(document.getElementById('accuracy'), 30, 1000, '%');
+            animateNumber(document.getElementById('accuracy'), 30, 1000, ' %');
         });
     </script>
 </body>
