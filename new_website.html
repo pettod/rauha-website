@@ -72,11 +72,12 @@
         h1 {
             font-size: 4.5rem;
             font-weight: 10;
-            margin-bottom: 1.5rem;
             background: linear-gradient(to right, #fff 20%, rgb(255, 255, 255));
             background-clip: text;
             -webkit-text-fill-color: transparent;
-            line-height: 1.1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         @media (max-width: 768px) {
@@ -142,7 +143,7 @@
             font-size: 3.5rem;
             font-weight: 700;
             background: linear-gradient(to right, #c1c1c1, #ffffff, #6d6d6d);
-            -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             margin-bottom: 1rem;
             letter-spacing: -0.02em;
@@ -155,6 +156,32 @@
             font-size: 1.1rem;
             color: rgba(255, 255, 255, 0.7);
             font-weight: 500;
+        }
+        .rotating-text {
+            position: absolute;
+            opacity: 0;
+            transition: all 1.2s ease;
+            background: linear-gradient(60deg,#714dff,#9c83ff 21.28%,#e151ff 57.97%,#fff759 90.64%);
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: left;
+        }
+        .rotating-text.active {
+            opacity: 1;
+            transform: rotateX(0deg);
+        }
+        .rotating-text.inactive {
+            opacity: 0;
+            transform: rotateX(-90deg);
+        }
+        .title-prefix {
+            z-index: 2;
+        }
+        .rotating-text-container {
+            position: relative;
+            width: 1000px; /* Adjust based on your longest text */
+            height: 90px;
+            text-align: left;
         }
     </style>
 </head>
@@ -169,12 +196,13 @@
     <div class="hero">
         <div class="container">
             <h1>
-                Efficient 
-                <span style="background: linear-gradient(60deg,#714dff,#9c83ff 21.28%,#e151ff 57.97%,#fff759 90.64%); background-clip: text; -webkit-text-fill-color: transparent;">
-                    Space Planning
-                </span><br>
-                with Occupancy Sensors
+                <div class="rotating-text-container">
+                    Efficient&emsp;
+                    <span class="rotating-text active">Energy Management</span>
+                    <span class="rotating-text">Space Planning</span>
+                </div>
             </h1>
+            <h1>with Occupancy Sensors</h1>
             <p class="subtitle">
                 Accurate occupancy sensors are finally cost effective and easy to install.
                 With our 360° field-of-view sensor, installation is not anymore restricted by the location or angle.
@@ -198,6 +226,30 @@
     </div>
 
     <script>
+        const texts = document.querySelectorAll('.rotating-text');
+        let currentIndex = 0;
+
+        function rotateText() {
+            // Remove active class from current text
+            texts[currentIndex].classList.remove('active');
+            texts[currentIndex].classList.add('inactive');
+
+            // Update index
+            currentIndex = (currentIndex + 1) % texts.length;
+
+            // Remove inactive class from new text and add active
+            texts[currentIndex].classList.remove('inactive');
+            texts[currentIndex].classList.add('active');
+        }
+
+        // Initial setup
+        texts.forEach((text, index) => {
+            if (index !== 0) text.classList.add('inactive');
+        });
+
+        // Rotate every 5 seconds instead of 3
+        setInterval(rotateText, 5000);
+
         function animateNumber(element, target, duration, suffix = '') {
             let start = 0;
             const increment = target / (duration / 16);
