@@ -210,6 +210,30 @@
                 height: 60px;
             }
         }
+        .animated-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .gradient-orb {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.5;
+        }
+        
+        .gradient-orb:nth-child(1) {
+            background: radial-gradient(circle at center, #714dff, transparent 40%);
+            top: -100px;
+            left: -100px;
+        }
     </style>
 </head>
 <body>
@@ -223,6 +247,9 @@
     -->
 
     <div class="hero">
+        <div class="animated-bg">
+            <div class="gradient-orb"></div>
+        </div>
         <div class="container">
             <h1>
                 <div class="rotating-text-container">
