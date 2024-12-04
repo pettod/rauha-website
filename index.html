@@ -60,7 +60,7 @@
 
     @media (max-width: 768px) {
         h1 {
-            font-size: 2.1rem;
+            font-size: 2.3rem;
         }
         body {
             padding-top: 100px;
@@ -159,10 +159,11 @@
         position: absolute;
         opacity: 0;
         transition: all 1.2s ease;
-        background: linear-gradient(60deg,#714dff,#9c83ff 21.28%,#e151ff 57.97%,#fff759 90.64%);
+        background: linear-gradient(60deg,#714dff,#9c83ff 21.28%,#e151ff 37.97%,#fff759 80.64%);
         background-clip: text;
         -webkit-text-fill-color: transparent;
-        text-align: left;
+        text-align: center;
+        width: 100%;
     }
     .rotating-text.active {
         opacity: 1;
@@ -179,12 +180,14 @@
         position: relative;
         width: 1000px; /* Adjust based on your longest text */
         height: 90px;
-        text-align: left;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
     @media (max-width: 768px) {
         .rotating-text-container {
             width: 95%;
-            height: 60px;
         }
     }
     .animated-bg {
@@ -227,7 +230,6 @@
         <div class="container">
             <h1>
                 <div class="rotating-text-container">
-                    Efficient&emsp;
                     <span class="rotating-text active">Energy Management</span>
                     <span class="rotating-text">Space Planning</span>
                 </div>
