@@ -54,15 +54,29 @@
             padding: 40px;
             margin-top: 2rem;
             width: 100%;
-            text-align: left;
         }
 
         .about-section {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
         }
 
         .about-section:last-child {
             margin-bottom: 0;
+        }
+
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-content {
+            flex: 1;
         }
 
         .section-title {
@@ -70,12 +84,14 @@
             font-size: 1.5rem;
             margin-bottom: 1rem;
             font-weight: 600;
+            text-align: left;
         }
 
         .section-text {
             color: rgba(255, 255, 255, 0.7);
             font-size: 1.1rem;
             line-height: 1.8;
+            text-align: left;
         }
 
         .animated-bg {
@@ -102,6 +118,22 @@
             top: -100px;
             left: -100px;
         }
+
+        @media (max-width: 768px) {
+            .about-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .section-title, .section-text {
+                text-align: center;
+            }
+
+            .profile-image {
+                width: 150px;
+                height: 150px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -121,24 +153,29 @@
 
         <div class="about-content">
             <div class="about-section">
-                <h2>Abhishek Gautam – CEO</h2>
-                <p class="section-text">
-                    Abhishek is a PhD in aero-acoustics.
-                    He is a former F1 engineer and has developed noiseless stealth aircrafts.
-                    In his latest job, he led the commercials in Gravity Industries to bring their “Iron man” jetsuit to life.
-                    He holds 14 publications.
-                </p>
+                <img src="rauha/assets/img/abhishek.png" alt="Abhishek Gautam" class="profile-image">
+                <div class="profile-content">
+                    <h2 class="section-title">Abhishek Gautam – CEO</h2>
+                    <p class="section-text">
+                        Abhishek is a PhD in aero-acoustics.
+                        He is a former F1 engineer and has developed noiseless stealth aircrafts.
+                        In his latest job, he led the commercials in Gravity Industries to bring their "Iron man" jetsuit to life.
+                        He holds 14 publications.
+                    </p>
+                </div>
             </div>
 
             <div class="about-section">
-                <h2>Peter Todorov – CTO</h2>
-                <p class="section-text">
-                    Peter has a MSc in AI.
-                    He is a former Huawei engineer, specialized on camera algorithms in smart phones and self driving vehicles.
-                    The past 3 years he spent on optimizing AI algorithms on chips.
-                    He holds 1 patent and 1 publication.
-                </p>
-            </div>
+                <img src="rauha/assets/img/peter.jpg" alt="Peter Todorov" class="profile-image">
+                <div class="profile-content">
+                    <h2 class="section-title">Peter Todorov – CTO</h2>
+                    <p class="section-text">
+                        Peter has a MSc in AI.
+                        He is a former Huawei engineer, specialized on camera algorithms in smart phones and self driving vehicles.
+                        The past 3 years he spent on optimizing AI algorithms on chips.
+                        He holds 1 patent and 1 publication.
+                    </p>
+                </div>
             </div>
         </div>
     </div>
