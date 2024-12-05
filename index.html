@@ -58,15 +58,6 @@
         align-items: center;
     }
 
-    @media (max-width: 768px) {
-        h1 {
-            font-size: 2.3rem;
-        }
-        body {
-            padding-top: 100px;
-        }
-    }
-
     .subtitle {
         font-size: 1.2rem;
         color: rgb(255, 255, 255);
@@ -185,11 +176,6 @@
         justify-content: center;
         align-items: center;
     }
-    @media (max-width: 768px) {
-        .rotating-text-container {
-            width: 95%;
-        }
-    }
     .animated-bg {
         position: absolute;
         top: 0;
@@ -213,6 +199,21 @@
         background: radial-gradient(circle at center, #714dff, transparent 40%);
         top: -100px;
         left: -100px;
+    }
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2.3rem;
+        }
+        body {
+            padding-top: 100px;
+            padding-bottom: 50px;
+        }
+        .rotating-text-container {
+            width: 95%;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+        }
     }
 </style>
 <body>
